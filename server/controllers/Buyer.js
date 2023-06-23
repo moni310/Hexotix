@@ -20,13 +20,21 @@ const createBuyer = async (req, res) => {
       });
 
     const Buyer = await buyer.create({ name, email, password });
+    if (buyer) {
+      return res.status(200).json({
+        status: 200,
+        success: true,
+        message: 'Buyer created successfully',
+        data: Buyer,
+      });
+    } else {
+      return res.status(400).json({
+        status: 400,
+        success: false,
+        message: "unable to create Buyer",
+      });
+    }
 
-    return res.status(200).json({
-      status: 200,
-      success: true,
-      message: 'Buyer created successfully',
-      data: Buyer,
-    });
   } catch (error) {
     return res.status(500).json({
       status: 500,
@@ -58,13 +66,23 @@ const viewShops = async (req, res) => {
         sellerName: shop.Seller.name,
       };
     });
+    if (shopData.length > 0) {
+      return res.status(200).json({
+        status: 200,
+        success: true,
+        message: 'Shops has find succcessful',
+        data: shopData,
+      });
 
-    return res.status(200).json({
-      status: 200,
-      success: true,
-      message: 'Shops has find succcessful',
-      data: shopData,
-    });
+    }
+    else {
+      return res.status(400).json({
+        status: 400,
+        success: false,
+        message: "unable to find shop of this Seller ",
+      });
+    }
+
   } catch (error) {
     return res.status(500).json({
       status: 500,
@@ -85,13 +103,23 @@ const viewBooks = async (req, res) => {
         ShopId: ShopId,
       },
     });
+    if (books.length > 0) {
+      return res.status(200).json({
+        status: 200,
+        success: true,
+        message: 'Book has find successfully',
+        data: books,
+      });
+    }
+    else {
+      return res.status(400).json({
+        success: true,
+        message: "No books in this shop",
+        data: [],
+      });
+    }
 
-    return res.status(200).json({
-      status: 200,
-      success: true,
-      message: 'Book has find successfully',
-      data: books,
-    });
+
   } catch (error) {
     return res.status(500).json({
       status: 500,
@@ -118,12 +146,21 @@ const createOrder = async (req, res) => {
 
     const Order = await Orders.create({ buyerId, sellerId, shopId, bookIds });
 
-    return res.status(200).json({
-      status: 200,
-      success: true,
-      message: 'Order has been created successfully',
-      data: Order,
-    });
+    if (Order) {
+      return res.status(200).json({
+        status: 200,
+        success: true,
+        message: 'Order has been created successfully',
+        data: Order,
+      });
+    }
+    else {
+      return res.status(400).json({
+        success: true,
+        message: "Unable to create Order",
+        data: [],
+      });
+    }
   } catch (error) {
     return res.status(500).json({
       status: 500,

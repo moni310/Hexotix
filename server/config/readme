@@ -1,0 +1,3 @@
+---to connect to the database and server please enter your databse credentials in .env file then
+
+----do npm install in server directory and then  go to client directory and do npm install in client directory 
